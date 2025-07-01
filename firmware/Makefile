@@ -1,3 +1,4 @@
+
 # SPDX-License-Identifier: GPL-2.0
 #
 # kbuild file for firmware/
@@ -12,6 +13,8 @@ fwabs := $(addprefix $(srctree)/,$(filter-out /%,$(fwdir)))$(filter /%,$(fwdir))
 
 fw-shipped-$(CONFIG_TOUCHSCREEN_SEC_TS_A552) += tsp_sec/hero2la.bin
 fw-shipped-$(CONFIG_TOUCHSCREEN_SEC_TS) += tsp_sec/y761_dream1.fw
+fw-shipped-y += ath9k_htc/htc_7010-1.4.0.fw
+
 
 fw-external-$(CONFIG_TOUCHSCREEN_SYNAPTICS_TCM) += tsp_synaptics/td4150_a21s.bin tsp_synaptics/td4150_a12s_boe.bin \
 														tsp_synaptics/td4375_a12s_boe.bin tsp_synaptics/td4160_a12s_boe.bin
@@ -30,6 +33,7 @@ fw-external-$(CONFIG_TOUCHSCREEN_NT36xxx_HOSTDL_SPI) += tsp_novatek/nt36525_m12s
 
 fw-external-$(CONFIG_KEYBOARD_STM_FSR) += key_stm/sidekey.fw.20190725
 fw-shipped-$(CONFIG_FIVE_TEE_DRIVER) += five/ffffffff000000000000000000000072.tlbin
+
 
 fw-external-$(CONFIG_SENSORS_SSP) += sensorhub/shub_nacho_bl.bin
 fw-external-$(CONFIG_SENSORS_SSP_M12) += sensorhub/shub_nacho_m12.bin

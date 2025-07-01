@@ -127,7 +127,7 @@ static u8 *pcan_msg_init_empty(struct pcan_usb_pro_msg *pm,
 /*
  * add one record to a message being built
  */
-static int pcan_msg_add_rec(struct pcan_usb_pro_msg *pm, u8 id, ...)
+static int pcan_msg_add_rec(struct pcan_usb_pro_msg *pm, int id, ...)
 {
 	int len, i;
 	u8 *pc;
@@ -146,9 +146,12 @@ static int pcan_msg_add_rec(struct pcan_usb_pro_msg *pm, u8 id, ...)
 		i += 4;
 		/* fall through */
 	case PCAN_USBPRO_TXMSG0:
-		*pc++ = va_arg(ap, int);
-		*pc++ = va_arg(ap, int);
-		*pc++ = va_arg(ap, int);
+		*(__le32 *)pc = cpu_to_le32(va_arg(ap, int));
+		pc += 4;
+		*(__le32 *)pc = cpu_to_le32(va_arg(ap, int));
+		pc += 4;
+		*(__le32 *)pc = cpu_to_le32(va_arg(ap, int));
+		pc += 4;
 		*(__le32 *)pc = cpu_to_le32(va_arg(ap, u32));
 		pc += 4;
 		memcpy(pc, va_arg(ap, int *), i);
@@ -157,7 +160,8 @@ static int pcan_msg_add_rec(struct pcan_usb_pro_msg *pm, u8 id, ...)
 
 	case PCAN_USBPRO_SETBTR:
 	case PCAN_USBPRO_GETDEVID:
-		*pc++ = va_arg(ap, int);
+		*(__le32 *)pc = cpu_to_le32(va_arg(ap, int));
+		pc += 4;
 		pc += 2;
 		*(__le32 *)pc = cpu_to_le32(va_arg(ap, u32));
 		pc += 4;
@@ -166,44 +170,28 @@ static int pcan_msg_add_rec(struct pcan_usb_pro_msg *pm, u8 id, ...)
 	case PCAN_USBPRO_SETFILTR:
 	case PCAN_USBPRO_SETBUSACT:
 	case PCAN_USBPRO_SETSILENT:
-		*pc++ = va_arg(ap, int);
-		*(__le16 *)pc = cpu_to_le16(va_arg(ap, int));
-		pc += 2;
-		break;
-
-	case PCAN_USBPRO_SETLED:
-		*pc++ = va_arg(ap, int);
-		*(__le16 *)pc = cpu_to_le16(va_arg(ap, int));
-		pc += 2;
-		*(__le32 *)pc = cpu_to_le32(va_arg(ap, u32));
+		*(__le32 *)pc = cpu_to_le32(va_arg(ap, int));
 		pc += 4;
-		break;
-
-	case PCAN_USBPRO_SETTS:
-		pc++;
 		*(__le16 *)pc = cpu_to_le16(va_arg(ap, int));
 		pc += 2;
 		break;
 
 	default:
-		pr_err("%s: %s(): unknown data type %02Xh (%d)\n",
-			PCAN_USB_DRIVER_NAME, __func__, id, id);
-		pc--;
-		break;
-	}
-
-	len = pc - pm->rec_ptr;
-	if (len > 0) {
-		*pm->u.rec_cnt = cpu_to_le32(le32_to_cpu(*pm->u.rec_cnt) + 1);
-		*pm->rec_ptr = id;
-
-		pm->rec_ptr = pc;
-		pm->rec_buffer_len += len;
+		va_end(ap);
+		return -EINVAL;
 	}
 
 	va_end(ap);
 
-	return len;
+	len = pc - pm->rec_ptr;
+	pm->rec_ptr = pc;
+
+	pm->rec_buffer_len += len;
+	(*pm->u.rec_cnt)++;
+
+	*pm->rec_ptr = id;
+
+	return 0;
 }
 
 /*

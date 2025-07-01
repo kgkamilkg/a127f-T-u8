@@ -1070,56 +1070,9 @@ static int ncm_get_alt(struct usb_function *f, unsigned intf)
 	return ncm->port.in_ep->driver_data ? 1 : 0;
 }
 
-/* WARN : we only support 16bit NTB and NDP */
-void ncm_add_header(u32 packet_start_offset, void *buf, u32 data_len)
-{
-	struct ncm_header *tmp_header;
 
-	memset(buf, 0, packet_start_offset);
 
-	tmp_header = (struct ncm_header *)buf;
-
-	tmp_header->signature = NCM_NTH_SIGNATURE;
-	tmp_header->header_len = NCM_NTH_LEN16;
-	tmp_header->sequence = NCM_NTH_SEQUENCE;
-	tmp_header->blk_len = data_len + packet_start_offset;
-	tmp_header->index = NCM_NTH_INDEX16;
-	tmp_header->dgram_sig = NCM_NDP_SIGNATURE;
-	tmp_header->dgram_header_len = NCM_NDP_LEN16;
-	tmp_header->dgram_rev = NCM_NDP_REV;
-	tmp_header->dgram_index0 = packet_start_offset;
-	tmp_header->dgram_len0 = data_len;
-}
-EXPORT_SYMBOL(ncm_add_header);
-
-int ncm_add_datagram(struct gether *port, __le16 *tmp, int length, int holdcnt)
-{
-	int tmp_val;
-	__le16 *tmp_addr;
-	u32 prev_index, prev_len;
-	int i;
-
-	tmp += 4;
-	tmp_val = get_unaligned_le16(tmp);
-	put_unaligned_le16(tmp_val + length, tmp);
-	tmp_val = get_unaligned_le16(tmp);
-
-	tmp_addr = tmp + 6;
-
-	tmp_addr += ((holdcnt - 1) * 2);
-
-	prev_index = get_unaligned_le16(tmp_addr);
-	tmp_addr += 1;
-	prev_len = get_unaligned_le16(tmp_addr);
-	tmp_addr += 1;
-
-	put_unaligned_le16(prev_index + prev_len, tmp_addr);
-	tmp_addr += 1;
-	put_unaligned_le16(length, tmp_addr);
-
-	return i;
-}
-EXPORT_SYMBOL(ncm_add_datagram);
+	
 
 static struct sk_buff *ncm_wrap_ntb(struct gether *port,
 				    struct sk_buff *skb)
@@ -1662,7 +1615,7 @@ extern int uether_queue_index;
 static ssize_t terminal_version_show(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
-	int ret, i;
+	int ret;
 	ret = sprintf(buf, "major %x minor %x vendor %x\n",
 			terminal_mode_version & 0xff,
 			(terminal_mode_version >> 8 & 0xff),
@@ -1963,3 +1916,50 @@ DECLARE_USB_FUNCTION_INIT(ncm, ncm_alloc_inst, ncm_alloc);
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Yauheni Kaliuta");
 
+void ncm_add_header(u32 packet_start_offset, void *buf, u32 data_len)
+{
+    struct ncm_header *tmp_header;
+
+    memset(buf, 0, packet_start_offset);
+
+    tmp_header = (struct ncm_header *)buf;
+    tmp_header->signature = NCM_NTH_SIGNATURE;
+    tmp_header->header_len = NCM_NTH_LEN16;
+    tmp_header->sequence = NCM_NTH_SEQUENCE;
+    tmp_header->blk_len = data_len + packet_start_offset;
+    tmp_header->index = NCM_NTH_INDEX16;
+    tmp_header->dgram_sig = NCM_NDP_SIGNATURE;
+    tmp_header->dgram_header_len = NCM_NDP_LEN16;
+    tmp_header->dgram_rev = NCM_NDP_REV;
+    tmp_header->dgram_index0 = packet_start_offset;
+    tmp_header->dgram_len0 = data_len;
+}
+EXPORT_SYMBOL(ncm_add_header);
+
+int ncm_add_datagram(struct gether *port, __le16 *tmp, int length, int holdcnt)
+{
+    int tmp_val;
+    __le16 *tmp_addr;
+    u32 prev_index, prev_len;
+    int i;
+
+    tmp += 4;
+    tmp_val = get_unaligned_le16(tmp);
+    put_unaligned_le16(tmp_val + length, tmp);
+
+    tmp_val = get_unaligned_le16(tmp);
+    tmp_addr = tmp + 6;
+    tmp_addr += ((holdcnt - 1) * 2);
+
+    prev_index = get_unaligned_le16(tmp_addr);
+    tmp_addr += 1;
+    prev_len = get_unaligned_le16(tmp_addr);
+    tmp_addr += 1;
+
+    put_unaligned_le16(prev_index + prev_len, tmp_addr);
+    tmp_addr += 1;
+    put_unaligned_le16(length, tmp_addr);
+
+    return i;
+}
+EXPORT_SYMBOL(ncm_add_datagram);

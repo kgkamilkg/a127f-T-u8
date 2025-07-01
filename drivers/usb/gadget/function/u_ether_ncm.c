@@ -1,3 +1,4 @@
+#include <linux/skbuff.h>
 
 // SPDX-License-Identifier: GPL-2.0+
 /*
@@ -8,6 +9,7 @@
  * Copyright (C) 2008 Nokia Corporation
  */
 
+#include <linux/skbuff.h>
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/gfp.h>
@@ -49,8 +51,6 @@ static void tx_complete_ncm_timer(struct usb_ep *ep, struct usb_request *req)
 		else
 			dev->net->stats.tx_bytes += req->length;
 
-		if (skb)
-			dev_consume_skb_any(skb);
 	}
 	dev->net->stats.tx_packets++;
 
@@ -375,8 +375,6 @@ static void tx_complete_ncm(struct usb_ep *ep, struct usb_request *req)
 		else
 			dev->net->stats.tx_bytes += req->length;
 
-		if (skb)
-			dev_consume_skb_any(skb);
 	}
 	dev->net->stats.tx_packets++;
 
