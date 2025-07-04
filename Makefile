@@ -2,8 +2,13 @@
 VERSION = 4
 PATCHLEVEL = 19
 SUBLEVEL = 111
+<<<<<<< HEAD
 EXTRAVERSION = -kali
 LOCALVERSION = 
+=======
+EXTRAVERSION = 
+
+>>>>>>> 11228894f (z usbip)
 NAME = "People's Front"
 
 # *DOCUMENTATION*

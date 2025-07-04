@@ -1,0 +1,55 @@
+kernel/crypto/ccm.ko:
+kernel/drivers/misc/eeprom/eeprom_93cx6.ko:
+kernel/drivers/net/wireless/ath/ath9k/ath9k.ko: kernel/drivers/net/wireless/ath/ath9k/ath9k_common.ko kernel/drivers/net/wireless/ath/ath9k/ath9k_hw.ko kernel/drivers/net/wireless/ath/ath.ko kernel/net/mac80211/mac80211.ko
+kernel/drivers/net/wireless/ath/ath9k/ath9k_hw.ko: kernel/drivers/net/wireless/ath/ath.ko
+kernel/drivers/net/wireless/ath/ath9k/ath9k_common.ko: kernel/drivers/net/wireless/ath/ath9k/ath9k_hw.ko kernel/drivers/net/wireless/ath/ath.ko
+kernel/drivers/net/wireless/ath/ath9k/ath9k_htc.ko: kernel/drivers/net/wireless/ath/ath9k/ath9k_common.ko kernel/drivers/net/wireless/ath/ath9k/ath9k_hw.ko kernel/drivers/net/wireless/ath/ath.ko kernel/net/mac80211/mac80211.ko
+kernel/drivers/net/wireless/ath/carl9170/carl9170.ko: kernel/drivers/net/wireless/ath/ath.ko kernel/net/mac80211/mac80211.ko
+kernel/drivers/net/wireless/ath/ath6kl/ath6kl_core.ko:
+kernel/drivers/net/wireless/ath/ath6kl/ath6kl_usb.ko: kernel/drivers/net/wireless/ath/ath6kl/ath6kl_core.ko
+kernel/drivers/net/wireless/ath/ath.ko:
+kernel/drivers/net/wireless/mediatek/mt7601u/mt7601u.ko: kernel/net/mac80211/mac80211.ko
+kernel/drivers/net/wireless/ralink/rt2x00/rt2x00lib.ko: kernel/net/mac80211/mac80211.ko
+kernel/drivers/net/wireless/ralink/rt2x00/rt2x00usb.ko: kernel/drivers/net/wireless/ralink/rt2x00/rt2x00lib.ko kernel/net/mac80211/mac80211.ko
+kernel/drivers/net/wireless/ralink/rt2x00/rt2800lib.ko: kernel/drivers/net/wireless/ralink/rt2x00/rt2x00lib.ko kernel/net/mac80211/mac80211.ko
+kernel/drivers/net/wireless/ralink/rt2x00/rt2500usb.ko: kernel/drivers/net/wireless/ralink/rt2x00/rt2x00usb.ko kernel/drivers/net/wireless/ralink/rt2x00/rt2x00lib.ko kernel/net/mac80211/mac80211.ko
+kernel/drivers/net/wireless/ralink/rt2x00/rt73usb.ko: kernel/lib/crc-itu-t.ko kernel/drivers/net/wireless/ralink/rt2x00/rt2x00usb.ko kernel/drivers/net/wireless/ralink/rt2x00/rt2x00lib.ko kernel/net/mac80211/mac80211.ko
+kernel/drivers/net/wireless/ralink/rt2x00/rt2800usb.ko: kernel/drivers/net/wireless/ralink/rt2x00/rt2800lib.ko kernel/drivers/net/wireless/ralink/rt2x00/rt2x00usb.ko kernel/drivers/net/wireless/ralink/rt2x00/rt2x00lib.ko kernel/net/mac80211/mac80211.ko
+kernel/drivers/net/wireless/realtek/rtl818x/rtl8187/rtl8187.ko: kernel/drivers/misc/eeprom/eeprom_93cx6.ko kernel/net/mac80211/mac80211.ko
+kernel/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.ko: kernel/net/mac80211/mac80211.ko
+kernel/drivers/net/wireless/zydas/zd1211rw/zd1211rw.ko: kernel/net/mac80211/mac80211.ko
+kernel/drivers/net/wireless/zydas/zd1201.ko:
+kernel/drivers/net/wireless/rndis_wlan.ko: kernel/drivers/net/usb/rndis_host.ko
+kernel/drivers/net/usb/rtl8150.ko:
+kernel/drivers/net/usb/r8152.ko:
+kernel/drivers/net/usb/rndis_host.ko:
+kernel/drivers/usb/class/cdc-acm.ko:
+kernel/drivers/usb/usbip/usbip-core.ko:
+kernel/drivers/usb/usbip/vhci-hcd.ko: kernel/drivers/usb/usbip/usbip-core.ko
+kernel/drivers/usb/usbip/usbip-host.ko: kernel/drivers/usb/usbip/usbip-core.ko
+kernel/drivers/usb/usbip/usbip-vudc.ko: kernel/drivers/usb/usbip/usbip-core.ko
+kernel/drivers/media/tuners/msi001.ko:
+kernel/drivers/media/dvb-frontends/si2168.ko:
+kernel/drivers/media/dvb-frontends/rtl2830.ko:
+kernel/drivers/media/dvb-frontends/rtl2832.ko:
+kernel/drivers/media/dvb-frontends/rtl2832_sdr.ko: kernel/drivers/media/common/videobuf2/videobuf2-vmalloc.ko
+kernel/drivers/media/dvb-frontends/zd1301_demod.ko:
+kernel/drivers/media/common/videobuf2/videobuf2-vmalloc.ko:
+kernel/drivers/media/usb/gspca/gspca_main.ko: kernel/drivers/media/common/videobuf2/videobuf2-vmalloc.ko
+kernel/drivers/media/usb/airspy/airspy.ko: kernel/drivers/media/common/videobuf2/videobuf2-vmalloc.ko
+kernel/drivers/media/usb/hackrf/hackrf.ko: kernel/drivers/media/common/videobuf2/videobuf2-vmalloc.ko
+kernel/drivers/media/usb/msi2500/msi2500.ko: kernel/drivers/media/common/videobuf2/videobuf2-vmalloc.ko
+kernel/drivers/media/spi/cxd2880-spi.ko:
+kernel/drivers/bluetooth/hci_vhci.ko:
+kernel/drivers/bluetooth/hci_uart.ko:
+kernel/drivers/bluetooth/bcm203x.ko:
+kernel/drivers/bluetooth/bpa10x.ko:
+kernel/drivers/bluetooth/bfusb.ko:
+kernel/drivers/bluetooth/btusb.ko: kernel/drivers/bluetooth/btrtl.ko kernel/drivers/bluetooth/btbcm.ko kernel/drivers/bluetooth/btintel.ko
+kernel/drivers/bluetooth/btintel.ko:
+kernel/drivers/bluetooth/btbcm.ko:
+kernel/drivers/bluetooth/btrtl.ko:
+kernel/net/ipv4/tcp_westwood.ko:
+kernel/net/ipv4/tcp_htcp.ko:
+kernel/net/mac80211/mac80211.ko:
+kernel/lib/crc-itu-t.ko:
