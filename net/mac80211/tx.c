@@ -1226,6 +1226,10 @@ ieee80211_tx_prepare(struct ieee80211_sub_if_data *sdata,
 		    skb->len + FCS_LEN <= local->hw.wiphy->frag_threshold ||
 		    info->flags & IEEE80211_TX_CTL_AMPDU)
 			info->flags |= IEEE80211_TX_CTL_DONTFRAG;
+
+        if (info->control.flags & IEEE80211_TX_CTL_INJECTED)
+            info->flags |= IEEE80211_TX_CTL_INJECTED;
+
 	}
 
 	if (!tx->sta)
